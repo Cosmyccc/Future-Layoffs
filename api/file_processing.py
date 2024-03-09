@@ -25,12 +25,11 @@ def load_and_index_files(repo_path):
     documents_dict={}
     
     for ext in file_extentions:
-        glob_pattern = f'{repo_path}/**/*.{"*."+ext}'
-        #glob_pattern = f'**/*.{ext}'
+        glob_pattern = f'**/*.{ext}'
         try:
             loader = None
             if ext=='ipynb':
-                loader = NotebookLoader(str(repo_path), include_outputs=True, max_output_length=50, remove_newline=True)
+                loader = NotebookLoader(str(repo_path), include_outputs=True, max_output_length=20, remove_newline=True)
             else:
                 loader = DirectoryLoader(str(repo_path), glob_pattern=glob_pattern)
                 
@@ -63,9 +62,8 @@ def load_and_index_files(repo_path):
         
     index=None
     if split_docs:
-        tokenzied_docs=clean_and_tokenize(doc.page_content) 
-        for doc in split_docs:
-            index=BM25Okapi(tokenzied_docs)
+        tokenzied_docs=[clean_and_tokenize(doc.page_content) for doc in split_docs]
+        index=BM25Okapi(tokenzied_docs)
     
     return index, split_docs, file_type_counts, [doc.metadata['source'] for doc in split_docs]
 
