@@ -60,7 +60,7 @@ async def ask_question_endpoint(request: Request):
     user_input = data.get('user_input')
     
     cohere_api_key = os.getenv("Cohere_api_key")
-    llm = Cohere(cohere_api_key=cohere_api_key, model="command", temperature=0.6)
+    llm = Cohere(cohere_api_key, model="command", temperature=0.6)
 
     template = """
     Repo: {repo_name} ({repo_name}) | Conv: {conversation_history} | Docs: {numbered_documents} | Q: {user_input} | FileCount: {file_type_counts} | FileNames: {filenames}
