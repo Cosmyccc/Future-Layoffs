@@ -1,5 +1,6 @@
-from utils import format_docs
-from file_processing import search_docs
+# questions.py
+from utils import format_documents
+from file_processing import search_documents
 
 class QuestionContext:
     def __init__(self, index, documents, llm_chain, model_name, repo_name, github_url, conversation_history, file_type_counts, filenames):
@@ -14,9 +15,10 @@ class QuestionContext:
         self.filenames = filenames
  
 def ask_question(question, context: QuestionContext):
-    relevant_docs = search_docs(question, context.index, context.documents, n_results=5)
-    numbered_documents = format_docs(relevant_docs)
-    
+    print(question)
+    relevant_docs = search_documents(question, context.index, context.documents, n_results=5)
+
+    numbered_documents = format_documents(relevant_docs)
     question_context = f"This question is about the GitHub repository '{context.repo_name}' available at {context.github_url}. The most relevant documents are:\n\n{numbered_documents}"
 
     answer_with_sources = context.llm_chain.run(
@@ -31,5 +33,6 @@ def ask_question(question, context: QuestionContext):
         file_type_counts=context.file_type_counts,
         filenames=context.filenames
     )
-    
     return answer_with_sources
+
+

@@ -1,7 +1,7 @@
-from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi import FastAPI, HTTPException, Request
 from starlette.middleware.cors import CORSMiddleware
 from langchain import PromptTemplate, LLMChain
-from file_processing import github_clone_repo, load_and_index_files
+from file_processing import clone_github_repo, load_and_index_files
 from questions import ask_question
 from utils import format_user_question
 from questions import ask_question, QuestionContext
@@ -9,13 +9,13 @@ from config import model_name
 import os
 import tempfile
 from fastapi.responses import JSONResponse
-from langchain.llms import Cohere
+from langchain.llms import Cohere  # Import Cohere instead of OpenAI
 from langchain.llms import OpenAI
 from langchain_community.llms import OpenAI
 
-
 app = FastAPI()
 
+# Enable CORS for all origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -23,12 +23,12 @@ app.add_middleware(
     allow_headers=["*", "Access-Control-Allow-Origin"],
 )
 
-g_github_url = None
-g_repo_name = None
+g_github_url = None  # Global variable to store github_url
+g_repo_name = None   # Global variable to store repo_name
 
 @app.get('/')
 async def root():
-    return {'message': 'Hello World!'}
+    return {'message' : 'Hello World!'}
 
 @app.post('/process_repository')
 async def process_repository(data: dict):
@@ -40,7 +40,7 @@ async def process_repository(data: dict):
     g_repo_name = repo_name
     
     with tempfile.TemporaryDirectory() as local_path:
-        if github_clone_repo(github_url, local_path):
+        if clone_github_repo(github_url, local_path):
             index, documents, file_type_counts, filenames = load_and_index_files(local_path)
             if index is None:
                 raise HTTPException(status_code=400, detail="No documents found to index.")
@@ -56,15 +56,16 @@ async def ask_question_endpoint(request: Request):
         raise HTTPException(status_code=400, detail="GitHub URL is not available. Call /process_repository first.")
     
     with tempfile.TemporaryDirectory() as local_path:
-        if github_clone_repo(g_github_url, local_path):
+        if clone_github_repo(g_github_url, local_path):
             index, documents, file_type_counts, filenames = load_and_index_files(local_path)
             if index is None:
                 raise HTTPException(status_code=400, detail="No documents found to index.")
     
     user_input = data.get('user_input')
     
-    cohere_api_key = os.getenv("Cohere_api_key")
-    llm = Cohere(cohere_api_key, model="command", temperature=0.6)
+    # Use Cohere instead of OpenAI
+    cohere_api_key = '1JZIsL1ghg1B0nHRX3S6gIPZ8Ngi0nYKFy74OxnB'
+    llm = Cohere(cohere_api_key=cohere_api_key, model="command", temperature=0.6)
 
     template = """
     Repo: {repo_name} ({repo_name}) | Conv: {conversation_history} | Docs: {numbered_documents} | Q: {user_input} | FileCount: {file_type_counts} | FileNames: {filenames}
@@ -94,7 +95,7 @@ async def ask_question_endpoint(request: Request):
     
     answer = ask_question(user_input, question_context)
     
-    return JSONResponse(content={"answer": answer}, status_code=200)
+    return {"answer": answer}
 
 if __name__ == '__main__':
     import uvicorn
