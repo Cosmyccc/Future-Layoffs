@@ -1,7 +1,11 @@
 from fastapi import FastAPI, HTTPException, Request, Response
 from starlette.middleware.cors import CORSMiddleware
 from langchain import PromptTemplate, LLMChain
-from api.index import *
+from file_processing import github_clone_repo, load_and_index_files
+from questions import ask_question
+from utils import format_user_question
+from questions import ask_question, QuestionContext
+from config import model_name
 import os
 import tempfile
 from fastapi.responses import JSONResponse
