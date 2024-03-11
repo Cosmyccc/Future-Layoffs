@@ -9,9 +9,8 @@ from config import model_name
 import os
 import tempfile
 from fastapi.responses import JSONResponse
-from langchain.llms import Cohere  # Import Cohere instead of OpenAI
 from langchain.llms import OpenAI
-from langchain_community.llms import OpenAI
+from langchain_community.llms import Cohere
 
 app = FastAPI()
 
