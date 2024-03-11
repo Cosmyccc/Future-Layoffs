@@ -7,3 +7,6 @@ uvicorn
 rank_bm25
 uuid
 nltk
+pandas
+unstructured
+cohere
