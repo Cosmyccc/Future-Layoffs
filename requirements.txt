@@ -2,6 +2,6 @@ fastapi
 starlette
 langchain
 langchain_community
-sklearn
+scikit-learn
 rank_bm25
 uuid
