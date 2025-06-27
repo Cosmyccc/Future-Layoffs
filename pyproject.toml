@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "LLM"
+version = "0.1.0"
+description = "This is the LLM feature for Future Layoffs"
+authors = ["Sayantan <sayantann2002@gmail.com>"]
+package-mode = false
+
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+fastapi = "^0.110.0"
+uvicorn = "^0.28.0"
+langchain = "^0.1.12"
+langchain-community = "^0.0.28"
+scikit-learn = "^1.4.1.post1"
+rank-bm25 = "^0.2.2"
+uuid = "^1.30"
+nltk = "^3.8.1"
+pandas = "^2.2.1"
+cohere = "^4.54"
+unstructured = "^0.12.6"
+langchain-google-genai = "^0.0.11"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

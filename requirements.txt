@@ -1,9 +1,0 @@
-fastapi
-starlette
-langchain
-langchain_community
-scikit-learn
-uvicorn
-rank_bm25
-uuid
-nltk
