@@ -1,19 +1,21 @@
 # Future-Layoffs
 
-Future-Layoffs is a Python backend project designed to process and query data related to layoffs, providing a robust API and modular application structure. The project is organized for scalability and maintainability, leveraging modern Python best practices.
+Future-Layoffs is a Python backend project that enables users to explore and ask questions about a GitHub code repository using the Groq language model. The application clones and indexes repositories, supports various file types, and leverages advanced language models to generate detailed, context-aware answers to user queries.
 
-## Features
-- Modular API structure (versioned under `api/v1`)
-- Data processing and querying endpoints
-- Service and controller layers for business logic
-- Shared state and utilities for extensibility
-- Poetry for dependency management
+## Key Features
+- Explore and query any GitHub repository interactively
+- Clones and indexes the contents of a GitHub repository
+- Supports various file types, including code, text, and Jupyter Notebook files
+- Generates detailed answers to user queries based on the repository's contents
+- Uses the Groq language model for generating responses
+- Supports interactive conversation with the language model
+- Presents top relevant documents for each question
 
 ## Installation
 
 1. **Clone the repository:**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Cosmyccc/Future-Layoffs.git
    cd Future-Layoffs
    ```
 
@@ -34,11 +36,12 @@ Future-Layoffs is a Python backend project designed to process and query data re
    python main.py
    ```
 
-3. **API Endpoints:**
-   - The API is organized under `api/v1/` with endpoints for processing and querying data.
+3. **Interact with the API:**
+   - Use the provided API endpoints to submit a GitHub repository URL and ask questions about its contents.
+   - The backend will clone and index the repository, then use the Groq language model to answer your queries.
    - Example endpoints:
-     - `/api/v1/process/` - Data processing
-     - `/api/v1/query/` - Data querying
+     - `/api/v1/process/` - Submit a repository for processing
+     - `/api/v1/query/` - Ask questions about the processed repository
 
 ## Project Structure
 ```
